@@ -13,12 +13,14 @@ usage: $0 options
 OPTIONS:
    -h      Show this message
    -i      Input ISO file
+   -s      SARA virdir account
    -v      Verbose
 EOF
 }
 
 INPUT_ISO=
-while getopts "hi:v" OPTION
+SARA_VIRDIR=
+while getopts "hi:s:v" OPTION
 do
      case $OPTION in
          h)
@@ -27,6 +29,9 @@ do
              ;;
          i)
              INPUT_ISO=$OPTARG
+             ;;
+         s)
+             SARA_VIRDIR=$OPTARG
              ;;
          ?)
              usage
@@ -37,6 +42,12 @@ done
 
 if [ -z $INPUT_ISO ]
 then
+     usage
+     exit 1
+fi
+if [ -z $SARA_VIRDIR ]
+then
+     echo "Supply -s <sara_virdir_account>"
      usage
      exit 1
 fi
@@ -55,5 +66,5 @@ sudo cp -r ./original-iso/.disk/ ./custom-iso/
 
 sudo umount ./original-iso/
 
-sh $DIR/compile.sh
+sh $DIR/compile.sh -s SARA_VIRDIR
 
