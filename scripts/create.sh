@@ -43,7 +43,9 @@ fi
 
 
 # inspired by http://razvangavril.com/linux-administration/custom-ubuntu-server-iso/
-
+if [ `whoami` != root ]; then
+    echo "Enter your sudo password or run this script as root"
+fi
 
 mkdir -p original-iso custom-iso
 sudo mount -o loop $INPUT_ISO ./original-iso
